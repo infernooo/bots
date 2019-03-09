@@ -4,7 +4,7 @@
   "description": "AutoMoin farmer",
   "main": "Dev.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dev.js"
   },
   "author": "",
   "license": "ISC",
