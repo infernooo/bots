@@ -1,11 +1,11 @@
 const discord = require("discord.js");
-require('dotenv/config');
+/*require('dotenv/config');
 const http = require('http');
 const port = process.env.PORT || 3000;
 
 http.createServer().listen(port);
 
-//const token = process.env.TOKEN;
+//const token = process.env.TOKEN;*/
 let Xp = '50',
     LuckyXp = '3880';
 let NoSpawn = 'The chance for a successful rare spawn is very low, but you can do it! Keep trying.';
