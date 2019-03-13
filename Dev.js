@@ -7,12 +7,12 @@ http.createServer().listen(port);
 
 //const token = process.env.TOKEN;*/
 let Xp = '50',
-    LuckyXp = '3880';
+    LuckyXp = '';
 let NoSpawn = 'The chance for a successful rare spawn is very low, but you can do it! Keep trying.';
 let NoFight = ', Nothing to fight right now!';
 let InfernoID = '352561523656359936',
     BotID = '432616859263827988';
-MoveNo = '1';
+MoveNo = '2';
 chnl = '551385745743675392'
 const bot = new discord.Client();
 
@@ -82,7 +82,7 @@ bot.on('message', (message) => {
                 if (message.embeds[i] &&
                 message.embeds[i].footer &&
                 message.embeds[i].footer.text.includes('Your player has also gained!'))
-                    return;
+                    collector.stop()
 			}})
             collector.on('end', data => {
                 if (!data.first())
@@ -100,7 +100,7 @@ bot.on('message', (message) => {
                 break;
             } else if (message.embeds[i] &&
                 message.embeds[i].footer &&
-                message.embeds[i].footer.text.includes(`Your player has also gained ${Xp} XP!`)) {
+                message.embeds[i].footer.text.includes(`Your player has also gained`)) {
                 message.channel.send(',s')
                 break;
                 //common luca defeat
