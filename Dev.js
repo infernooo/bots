@@ -33,6 +33,9 @@ bot.on('message', msg => {
             spamstp();
             msg.channel.send('<@488057202196611072>');
         }
+        if(msg.content.includes('//')){
+            spamstp();
+        }
 
         for (var i = 0; i < msg.embeds.length; i++) {
         if (msg.embeds[i] &&
