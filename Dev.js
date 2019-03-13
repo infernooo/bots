@@ -29,6 +29,10 @@ bot.on('message', msg => {
         console.log('random rare caught')
         spamSt()
         }
+        else if(msg.content.includes(', A rare Raider Pokémon has arrived! Who will be brave enough to take on the challenge?')){
+            spamstp();
+            msg.channel.send('<@488057202196611072>');
+        }
 
         for (var i = 0; i < msg.embeds.length; i++) {
         if (msg.embeds[i] &&
@@ -45,4 +49,4 @@ bot.on('error', err => {
     console.log(err)
 })
 
-bot.login(process.env.TOKEN);
+bot.login(token);
