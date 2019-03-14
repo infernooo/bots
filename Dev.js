@@ -48,8 +48,8 @@ bot.on('message', (message) => {
         if(message.content.includes('.')){
             spamSt();
         }
-        else if (message.content.includes(', A rare Raider Pokémon has arrived! Who will be brave enough to take on the challenge?')) 
-                   bossDefeat();
+        else if (message.content.includes(', A **rare** Raider Pokémon has arrived! Who will be brave enough to take on the challenge?')) 
+                   spamSp();
         else if(message.content.includes('A rare pokemon has spawned! Who will catch it?')){
             spamSp();
             message.channel.send(',c 9');
