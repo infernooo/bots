@@ -47,7 +47,7 @@ function spamSp() {
 function capt(message) { //captcha confirmed nothing to fire
     
     const collector = new discord.MessageCollector(message.channel, m => m.author.id === InfernoID, {
-        time: 10000
+        time: 5000
     });
     collector.on('collect', message => {
         if (message.content.includes(',s') || message.content.includes(`,f ${MoveNo}`)) {
@@ -159,8 +159,4 @@ bot.on('message', (message) => {
 })
 
 
-bot.on('error', err => {
-    console.log(err)
-});
-
-bot.login(TOKEN);
+bot.login(process.env.TOKEN);
