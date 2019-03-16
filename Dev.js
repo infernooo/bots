@@ -12,7 +12,7 @@ let NoSpawn = 'The chance for a successful rare spawn is very low, but you can d
 let NoFight = ', Nothing to fight right now!';
 let InfernoID = '352561523656359936',
     BotID = '432616859263827988';
-MoveNo = '3';
+MoveNo = '2';
 chnl = '551385745743675392'
 const bot = new discord.Client();
 
@@ -44,7 +44,22 @@ function spamSp() {
     check = false
 }
 
-
+function capt(message) { //captcha confirmed nothing to fire
+    
+    const collector = new discord.MessageCollector(message.channel, m => m.author.id === InfernoID, {
+        time: 10000
+    });
+    collector.on('collect', message => {
+        if (message.content.includes(',s') || message.content.includes(`,f ${MoveNo}`)) {
+            collector.stop();
+        }
+    })
+    collector.on('end', data => {
+        if (!data.first()) {
+            bot.channels.get('551385745743675392').send(',s');
+        }
+    })
+}
 
 function Ns(message) {
     if (message.content.includes(NoSpawn))
@@ -105,25 +120,6 @@ function won(message) { //,f
     })
 
 }
-
-function capt(message) { //captcha confirmed nothing to fire
-    
-    const collector = new discord.MessageCollector(message.channel, m => m.author.id === InfernoID, {
-        time: 3000
-    });
-    collector.on('collect', message => {
-        if (message.content.includes(',s') || message.content.includes(`,f ${MoveNo}`)) {
-            collector.stop();
-        }
-    })
-    collector.on('end', data => {
-        if (!data.first()) {
-            bot.channels.get('551385745743675392').send(',s');
-        }
-    })
-}
-
-
 
 bot.on('message', (message) => {
     if (message.channel.id === '551385745743675392') {
