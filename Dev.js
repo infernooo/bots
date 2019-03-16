@@ -18,6 +18,7 @@ const bot = new discord.Client();
 
 
 var spam;
+var check = false;
 
 bot.on('ready', () => {
     console.log('-----------------------------------------------------------------');
@@ -32,45 +33,136 @@ bot.on('error', error => {
 
 
 function spamSt() {
+    check = true;
     spam = setInterval(() => {
-        bot.channels.get('551385745743675392').send('spaaaaaaaaammmmm');
+        bot.channels.get('551385745743675392').send(`,f ${MoveNo}`);
     }, 2000)
 }
 
 function spamSp() {
     clearInterval(spam)
+    check = false
 }
 
 
-bot.on('message', (message) => {
 
-    if (message.channel.id === '551385745743675392') {
-        if(message.content.includes('.')){
-            spamSt();
-        }
-        else if (message.content.includes(', A **rare** Raider Pokémon has arrived! Who will be brave enough to take on the challenge?')) 
-                   spamSp();
-        else if(message.content.includes('A rare pokemon has spawned! Who will catch it?')){
-            spamSp();
-            message.channel.send(',c 9');
-            spamSt();
-        }
-        else if(message.content.includes('//')){
-            spamSp();
-        }
+function Ns(message) {
+    if (message.content.includes(NoSpawn))
+        message.channel.send(`,f ${MoveNo}`)
+}
+
+function spawn(message) { //,s
+    const collector = new discord.MessageCollector(message.channel, m => m.author.id === BotID, {
+        time: 10000
+    });
+
+    collector.on('collect', message => {
 
         for (var i = 0; i < message.embeds.length; i++) {
-            if (message.embeds[i] && message.embeds[i].title && message.embeds[i].title.includes("You found a plant patch with a four leaf clover!")) {
+            if (message.embeds[i] &&
+                message.embeds[i].title &&
+                message.embeds[i].title.includes('Mega (Boss)')) {
+                spamSt();
+            } else if (message.embeds[i] &&
+                message.embeds[i].footer &&
+                message.embeds[i].footer.text.includes('!fight / !catch / !travel')) {
+                message.channel.send(`,f ${MoveNo}`)
+                collector.stop();
+            } else if (message.embeds[i] && message.embeds[i].title && message.embeds[i].title.includes("You found a plant patch with a four leaf clover!")) {
                 message.channel.send(',take')
-                break;
+                setTimeout(() => message.channel.send(',s'), 2000);
+                collector.stop();
             }
         }
-    }
-})
-        
+    });
+    collector.on('end', msg => {
+        if (!msg.first()) {
+            bot.channels.get('551385745743675392').send(',s');
+        }
+    })
+}
 
-bot.off('error', err => {
+function won(message) { //,f
+
+    const collector = new discord.MessageCollector(message.channel, m => m.author.id === BotID, {
+        time: 10000
+    });
+
+    collector.on('collect', message => {
+        for (var i = 0; i < message.embeds.length; i++) {
+
+            if (message.embeds[i] &&
+                message.embeds[i].footer &&
+                message.embeds[i].footer.text.includes(`Your player has also gained`)) {
+                message.channel.send(',s')
+                collector.stop();
+            }
+        }
+    })
+    collector.on('end', data => {
+        if (!data.first())
+            bot.channels.get('551385745743675392').send(',s');
+    })
+
+}
+
+function capt(message) { //captcha confirmed nothing to fire
+    
+    const collector = new discord.MessageCollector(message.channel, m => m.author.id === InfernoID, {
+        time: 3000
+    });
+    collector.on('collect', message => {
+        if (message.content.includes(',s') || message.content.includes(`,f ${MoveNo}`)) {
+            collector.stop();
+        }
+    })
+    collector.on('end', data => {
+        if (!data.first()) {
+            bot.channels.get('551385745743675392').send(',s');
+        }
+    })
+}
+
+
+
+bot.on('message', (message) => {
+    if (message.channel.id === '551385745743675392') {
+        
+        if (message.content.includes(',s')) 
+            spawn(message)
+         else if (message.content === '.') 
+            message.channel.send(',s')
+         else if (message.content.includes('//')) 
+            bot.destroy().then(spamSp()).then(() => bot.login(TOKEN));
+        
+        for (var i = 0; i < message.embeds.length; i++) {
+            if (message.embeds[i] &&
+                message.embeds[i].title &&
+                message.embeds[i].title.includes("Boss Defeated!")) {
+                spamSp();
+                message.channel.send(',s')
+            }
+        }
+        if (message.content.includes(`,f ${MoveNo}`) && check === false)
+            won(message);
+        else if (message.content.startsWith('|-Ïñfërñø-|') && message.content.includes('!captcha') && message.author.id != bot.user.id) {
+            let msg = message.content;
+            msg = msg.replace('|-Ïñfërñø-| Please type `!', '')
+            msg = msg.replace('` to continue.', '');
+            message.channel.send(',' + msg);
+        } else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && spam === true)
+            return;
+          else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && spam === false)
+        capt(message)
+        else if(message.content.includes('Nothing to fight right now!')){
+        capt(message);
+        }
+}
+})
+
+
+bot.on('error', err => {
     console.log(err)
 });
 
-bot.login(process.env.TOKEN);
+bot.login(TOKEN);
