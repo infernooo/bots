@@ -12,7 +12,7 @@ let NoSpawn = 'The chance for a successful rare spawn is very low, but you can d
 let NoFight = ', Nothing to fight right now!';
 let InfernoID = '352561523656359936',
     BotID = '432616859263827988';
-MoveNo = '2';
+MoveNo = '3';
 chnl = '551385745743675392'
 const bot = new discord.Client();
 
