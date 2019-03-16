@@ -150,10 +150,10 @@ bot.on('message', (message) => {
             msg = msg.replace('|-Ïñfërñø-| Please type `!', '')
             msg = msg.replace('` to continue.', '');
             message.channel.send(',' + msg);
-        }else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && spam === false)
-        capt(message)
-        
-        else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && spam === true)
+        }else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && check === false)
+         capt(message)
+
+         else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && check === true)
             return;
           
         else if(message.content.includes('Nothing to fight right now!')){
@@ -167,4 +167,4 @@ bot.on('error', err => {
     console.log(err)
 });
 
-bot.login(process.env.TOKEN);
+bot.login(TOKEN);
