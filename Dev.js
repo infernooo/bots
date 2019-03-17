@@ -12,9 +12,12 @@ let NoSpawn = 'The chance for a successful rare spawn is very low, but you can d
 let NoFight = ', Nothing to fight right now!';
 let InfernoID = '352561523656359936',
     BotID = '432616859263827988';
+exports.InfernoID = InfernoID;
+exports.BotID = BotID;
 MoveNo = '2';
 chnl = '551385745743675392'
 const bot = new discord.Client();
+exports.bot = bot;
 
 
 var spam;
@@ -31,34 +34,34 @@ bot.on('error', error => {
     console.log(error)
 })
 
+function capt(message, t) {
+    const collector = new discord.MessageCollector(message.channel, m => m.author.id === InfernoID, {
+        time: t,
+        max: 1
+    });
+    collector.on('collect', message => {
+        if (message.content.includes(',s') || message.content.includes(`,f ${MoveNo}`)) {
+            collector.stop();
+            return;
+        }
+    });
+    collector.on('end', data => {
+        if (!data.first()) {
+            bot.channels.get('551385745743675392').send(',s');
+        }
+    });
+}
 
 function spamSt() {
     check = true;
     spam = setInterval(() => {
         bot.channels.get('551385745743675392').send(`,f ${MoveNo}`);
-    }, 2000)
+    }, 3000)
 }
 
 function spamSp() {
     clearInterval(spam)
     check = false
-}
-
-function capt(message) { //captcha confirmed nothing to fire
-    
-    const collector = new discord.MessageCollector(message.channel, m => m.author.id === InfernoID, {
-        time: 5000
-    });
-    collector.on('collect', message => {
-        if (message.content.includes(',s') || message.content.includes(`,f ${MoveNo}`)) {
-            collector.stop();
-        }
-    })
-    collector.on('end', data => {
-        if (!data.first()) {
-            bot.channels.get('551385745743675392').send(',s');
-        }
-    })
 }
 
 function Ns(message) {
@@ -85,14 +88,13 @@ function spawn(message) { //,s
                 collector.stop();
             } else if (message.embeds[i] && message.embeds[i].title && message.embeds[i].title.includes("You found a plant patch with a four leaf clover!")) {
                 message.channel.send(',take')
-                setTimeout(() => message.channel.send(',s'), 2000);
                 collector.stop();
             }
         }
     });
     collector.on('end', msg => {
         if (!msg.first()) {
-            bot.channels.get('551385745743675392').send(',s');
+            bot.channels.get('551385745743675392').send(',s').then(console.log('this nigga'));
         }
     })
 }
@@ -129,7 +131,7 @@ bot.on('message', (message) => {
          else if (message.content === '.') 
             message.channel.send(',s')
          else if (message.content.includes('//')) 
-            bot.destroy().then(spamSp()).then(() => bot.login(TOKEN));
+            bot.destroy().then(setTimeout(() => bot.login(TOKEN), 10000));
         
         for (var i = 0; i < message.embeds.length; i++) {
             if (message.embeds[i] &&
@@ -137,7 +139,8 @@ bot.on('message', (message) => {
                 message.embeds[i].title.includes("Boss Defeated!")) {
                 spamSp();
                 message.channel.send(',s')
-            }
+            }else if (message.embeds[i] && message.embeds[i].title && message.embeds[i].title.includes("You've chosen take"))
+            message.channel.send(',s')
         }
         if (message.content.includes(`,f ${MoveNo}`) && check === false)
             won(message);
@@ -147,16 +150,21 @@ bot.on('message', (message) => {
             msg = msg.replace('` to continue.', '');
             message.channel.send(',' + msg);
         }else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && check === false)
-         capt(message)
+        bot.destroy().then(setTimeout(() => bot.login(TOKEN), 5000)).then(message.channel.send('boop'));
+         
 
          else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && check === true)
             return;
           
         else if(message.content.includes('Nothing to fight right now!')){
-        capt(message);
+        capt(message, 10000);
         }
 }
 })
 
 
-bot.login(process.env.TOKEN);
+bot.on('error', err => {
+    console.log(err)
+});
+
+bot.login(TOKEN);
