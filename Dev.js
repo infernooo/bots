@@ -150,7 +150,7 @@ bot.on('message', (message) => {
             msg = msg.replace('` to continue.', '');
             message.channel.send(',' + msg);
         }else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && check === false)
-        bot.destroy().then(bot.login(TOKEN)).then(setTimeout(() => message.channel.send('boop'), 5000));
+        bot.destroy().then(bot.login(TOKEN)).then(setTimeout(() => message.channel.send(',s'), 5000));
          
 
          else if (message.content.includes('You have successfully confirmed yourself and can now use other commands.') && check === true)
