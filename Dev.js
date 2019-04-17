@@ -10,16 +10,16 @@ let channels = ["567621067233820692", "487686094377451534", "469516684307464196"
 
 let Text = 'spaaaammmmmmm'
 function Sspam(message){
-    sp = setInterval(() => {
+    sp = setTimeout(() => {
         message.channel.startTyping();
         message.channel.send(Text);
         message.channel.stopTyping();
-    }, 2000)
+    }, 1000)
 }
 bot.on('message', message => {
     for(var i = 0; i < channels.length; i++){
     if(message.channel.id === channels[i])
-        if (message.author.id === '468042826698063903')
+        if (message.author.id === '470155848497496065')
             message.channel.send(Text)
         
       
