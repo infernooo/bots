@@ -19,7 +19,7 @@ function Sspam(message){
 bot.on('message', message => {
     for(var i = 0; i < channels.length; i++){
     if(message.channel.id === channels[i])
-        if (message.author.id === '470155848497496065')
+        if (message.author.id === '468042826698063903')
             message.channel.send(Text)
         
       
