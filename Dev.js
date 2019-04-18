@@ -17,7 +17,7 @@ function Sspam(message){
     sp = setTimeout(() => {
         message.channel.startTyping();
         random();
-        message.channel.send(message);
+        message.channel.send(Text[e]);
         message.channel.stopTyping();
     }, 1000)
 }
