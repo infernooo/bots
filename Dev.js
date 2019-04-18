@@ -6,7 +6,7 @@ let sp;
 bot.on('ready', () => {
     console.log('ready')
 })
-let channels = ["567621067233820692", "487686094377451534", "469516684307464196"]
+let channels = ["568310724556750861", "568310683209564172", "469516684307464196"]
 
 let Text = 'spaaaammmmmmm'
 function Sspam(message){
