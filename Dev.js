@@ -12,7 +12,7 @@ let Text = 'spaaaammmmmmm'
 function Sspam(message){
     sp = setTimeout(() => {
         message.channel.startTyping();
-        message.channel.send(Text);
+        message.channel.send(message);
         message.channel.stopTyping();
     }, 1000)
 }
