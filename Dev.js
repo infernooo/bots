@@ -2,16 +2,21 @@ const discord = require("discord.js");
 const TOKEN = "NTY4MDI2MDE5MjQwNDc2Njcz.XLcF6A.9_teAXv4ZxtOSmXvDrpl-aGRUjM"
 //"NDcwMTU1ODQ4NDk3NDk2MDY1.XLWQeA.vLt21ipNYb7pn-EKyE_pzgkCp6A"; 
 const bot = new discord.Client();
-let sp;
+let sp,e;
 bot.on('ready', () => {
     console.log('ready')
 })
 let channels = ["568310724556750861", "568310683209564172", "469516684307464196"]
 
-let Text = 'spaaaammmmmmm'
+let Text = [',spaaaaaaaaaaaam', ',spaaaaaaaaaaaaaaammmm', ',aslkalksf',',asdhasjhaksjdhakjsh']
+
+function random(){
+	e = Math.floor(Math.random()*3);
+}
 function Sspam(message){
     sp = setTimeout(() => {
         message.channel.startTyping();
+        random();
         message.channel.send(message);
         message.channel.stopTyping();
     }, 1000)
