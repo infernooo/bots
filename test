@@ -1,0 +1,26 @@
+message.embeds.forEach(async embed => {
+            embed.fields.forEach(async field => {
+                sp = field.name
+                check = sp.substring(0, sp.indexOf(" "))
+                if (hp.includes(check) && field.name.includes("♀️")) {
+                    print(sp)
+                    
+                } else if (atk.includes(check) && field.name.includes("♀️")) {
+                    print();
+                    
+                } else if (def.includes(check) && field.name.includes("♀️")) {
+                    print();
+                   
+                } else if (spa.includes(check) && field.name.includes("♀️")) {
+                    print();
+                    
+                } else if (spD.includes(check) && field.name.includes("♀️")) {
+                    print(sp);
+                    
+                } else if (spe.includes(check) && field.name.includes("♀️")) {
+                    print();
+                    
+                }
+            })
+            sp = ""
+        });
