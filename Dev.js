@@ -1,5 +1,5 @@
 const discord = require("discord.js");
-const mou = "NDg4MDU3MjAyMTk2NjExMDcy.XMUvBA.m_sPMoaWw2wg_jOuFAaIRRJ9FXg"
+const mou = ""
 
 const bot = new discord.Client();
 let sp, e;
